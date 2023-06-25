@@ -1,0 +1,190 @@
+<div class="page-container">
+  <div class="header">
+    <div class="logo">
+      <img src="../assets/images/cyclix.png" />
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="page-title">
+      Erzähl uns etwas über dein Velo.
+    </div>
+  </div>
+  <div class="middle-content">
+    <div class="section-1" *ngIf="currentStep === 1">
+      <div class="wrapper">
+        <div class="space-left">
+          <img src="../assets/images/progress-slider1.png" />
+        </div>
+        <div class="space-middle">
+          <div class="first-section-1 text-1">Felder mit einem * sind Pflichtfelder</div>
+          <div class="first-section-2">
+            <div class="first-section-3">
+              <div class="text-2">Kennst du deinen Velo-Typ?</div>
+              <div class="text-3">
+                <select class="text-4" [(ngModel)]="serviceData.bikeTypeId">
+                  <option  *ngFor="let bikeType of bikeTypes" [value]="bikeType?.bikeTypeId">{{bikeType?.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="first-section-4">
+              <div class="text-5">Welche Marke ist dein Velo?</div>
+              <div class="text-6">
+                <select class="text-7" [(ngModel)]="serviceData.brandId" >
+                  <option *ngFor="let brand of brands" [value]="brand?.brandId">{{brand?.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="space-right"></div>
+      </div>
+      <div class="action">
+        <div class="btn-next" (click)="SecondStep()">
+          <span class="action-text">Next step</span>
+          <img src="../assets/images/ArrowNext.png" width="22" height="22" />
+        </div>
+      </div>
+    </div>
+    <div class="section-2" *ngIf="currentStep === 2">
+      <div class="wrapper">
+        <div class="space-left">
+          <img src="../assets/images/progress-slider2.png" />
+        </div>
+        <div class="space-middle second-section-middle">
+          <div class="second-section-1">Möchtest du ein Standard Service Paket buchen?</div>
+          <div class="second-section-2">Falls du mit "Service Paketen" nichts anfangen kannst, findest du weiter unten eine Auswahlliste mit verschiedenen Service-Leistungen.</div>
+          <div class="second-section-3">
+            <div class="second-section-3-{{index + 1}}" *ngFor="let standardService of standardServices;let index = index;">
+              <div class="second-section-3-{{index + 1}}-1 oval"></div>
+              <div class="second-section-3-{{index + 1}}-2 text-orange">{{standardService.name}}</div>
+              <div class="second-section-3-{{index + 1}}-3">
+                <input type="radio" name="standardService" [(ngModel)]="serviceData.standardServiceId" value="{{standardService.standardServiceId}}" />
+              </div>
+            </div>
+          </div>
+          <div class="second-section-4">
+            <div class="second-section-4-1">
+              <input type="checkbox" />
+              <span class="second-section-4-1-text text-orange">Kein Service Paket buchen</span>
+            </div>
+            <div class="second-section-4-2">
+              <input type="checkbox" [(ngModel)]="serviceData.isElectricDriveExist" />
+              <span class="second-section-4-2-text text-orange">Hat dein Velo einen Elektro Antrieb?</span>
+            </div>
+          </div>
+        </div>
+        <div class="space-right"></div>
+      </div>
+      <div class="action">
+        <div class="btn-next" (click)="ThirdStep()">
+          <span class="action-text">Next step</span>
+          <img src="../assets/images/ArrowNext.png" width="22" height="22" />
+        </div>
+      </div>
+    </div>
+    <div class="section-3" *ngIf="currentStep === 3">
+      <div class="wrapper">
+        <div class="space-left">
+          <img src="../assets/images/progress-slider3.png" />
+        </div>
+        <div class="space-middle third-section-middle">
+          <div class="third-section-1">Möchtest du nur einzelne Services buchen?</div>
+          <div class="third-section-2">Eine Mehrfachauswahl ist möglich.</div>
+          <div class="third-section-3">
+            <div class="third-section-3-{{index + 1}}" *ngFor="let servicePackage of servicePackages;let index = index;">
+              <input type="checkbox" [(ngModel)]="serviceData.servicePackageId" name="servicePackage{{index + 1}}"/>
+              <span class="third-section-3-{{index + 1}}-text text-orange">{{servicePackage.name}}</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="space-right"></div>
+      </div>
+      <div class="action">
+        <div class="btn-next" (click)="FourthStep()">
+          <span class="action-text">Next step</span>
+          <img src="../assets/images/ArrowNext.png" width="22" height="22" />
+        </div>
+      </div>
+    </div>
+    <div class="section-4" *ngIf="currentStep === 4">
+      <div class="wrapper">
+        <div class="space-left">
+          <img src="../assets/images/progress-slider4.png" />
+        </div>
+        <div class="space-middle fourth-section-middle">
+
+          <div class="fourth-section-1">Möchtest du das Problem an deinem Velo noch näher beschreiben?</div>
+          <div class="fourth-section-2">
+          <input [(ngModel)]="serviceData.problemDefinition" class="fourth-section-2-text-area" type="text" placeholder="z.B. die Kette ist gerissen, ich habe einen Achter im Vorderrad." /></div>
+          <div class="fourth-section-3">
+            <div class="fourth-section-3-1">
+              <input [(ngModel)]="serviceData.costCeiling"  class="fourth-section-3-text" type="text"  />
+              <span class="fourth-section-3-1-text text-orange">Hast du ein Kostendach?</span>
+            </div>
+          </div>
+        </div>
+        <div class="space-right"></div>
+      </div>
+      <div class="action">
+        <div class="btn-next" (click)="FifthStep()">
+          <span class="action-text">Next step</span>
+          <img src="../assets/images/ArrowNext.png" width="22" height="22" />
+        </div>
+      </div>
+    </div>
+    <div class="section-5" *ngIf="currentStep === 5">
+      <div class="wrapper">
+        <div class="space-left">
+          <img src="../assets/images/progress-slider5.png" />
+        </div>
+        <div class="space-middle space-middle-fifth">
+
+          <div class="fifth-section-1">Sag uns noch kurz etwas über dich:</div>
+          <div class="fifth-section-2">
+            <div class="fifth-section-2-1">
+              <input class="fifth-section-2-text" type="text" placeholder="Vorname" [(ngModel)]="serviceData.firstName" />
+            </div>
+            <div class="fifth-section-2-2"> 
+              <input class="fifth-section-2-text" type="text" placeholder="Nachname" [(ngModel)]="serviceData.lastName"/>
+            </div>
+          </div>
+          <div class="fifth-section-2">
+            <div class="fifth-section-2-1">
+              <input class="fifth-section-2-text" type="text" placeholder="Strasse" [(ngModel)]="serviceData.street"/>
+            </div>
+            <div class="fifth-section-2-2">
+              <input class="fifth-section-2-text" type="text" placeholder="Nr" [(ngModel)]="serviceData.number"/>
+            </div> 
+          </div>
+          <div class="fifth-section-2">
+            <div class="fifth-section-2-1">
+              <input class="fifth-section-2-text" type="text" placeholder="PLZ" [(ngModel)]="serviceData.postCode"/>
+            </div>
+            <div class="fifth-section-2-2">
+              <input class="fifth-section-2-text" type="text" placeholder="Ort" [(ngModel)]="serviceData.location"/>
+            </div>
+          </div>
+          <div class="fifth-section-2">
+            <div class="fifth-section-2-1">
+              <input class="fifth-section-2-text" type="text" placeholder="E-mail" [(ngModel)]="serviceData.email"/>
+            </div>
+            <div class="fifth-section-2-2">
+              <input class="fifth-section-2-text" type="text" placeholder="Telefon" [(ngModel)]="serviceData.phone"/>
+            </div>
+          </div>
+
+        </div>
+        <div class="space-right"></div>
+      </div>
+      <div class="action">
+        <div class="btn-submit" (click)="submit()">
+          <span class="action-text">Servicedaten hochladen und Angebote erhalten</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <img src="../assets/images/Frame-Footer.png" />
+  </div>
+</div>
